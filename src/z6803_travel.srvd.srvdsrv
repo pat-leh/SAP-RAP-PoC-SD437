@@ -1,0 +1,4 @@
+@EndUserText.label: 'TRavel Service'
+define service Z6803_travel {
+  expose z6803_c_TRAVEL;
+}

@@ -1,0 +1,159 @@
+managed implementation in class zbp_6803_r_travel unique;
+strict ( 2 );
+
+with draft;
+
+define behavior for z6803_R_TRAVEL alias travel
+persistent table z6803_travel ##UNMAPPED_FIELD
+draft table z6803_travel_d
+lock master
+total etag ChangedAt
+authorization master ( instance )
+etag master LocChangedAt //ChangedAt
+early numbering
+{
+  create ( authorization : global );
+  update ( features : instance );
+  delete;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare
+  {
+    validation valDescription;
+    validation valCustomer;
+    validation valBeginDate;
+    validation valEndDate;
+    validation valDateSequence;
+  }
+  association _TravelItem { create; with draft; }
+  field ( readonly )
+  status,
+  Duration,
+  ChangedAt,
+  ChangedBy,
+  LocChangedAt;
+
+  //  field ( readonly : update, mandatory : create )
+  field ( readonly )
+  AgencyId,
+  TravelId;
+  field ( mandatory )
+  Description,
+  EndDate;
+  field ( features : instance )
+  CustomerId,
+  BeginDate;
+
+
+  action ( features : instance ) cancel_travel;
+
+
+  validation valDescription on save
+  {
+    create;
+    field Description;
+  }
+
+  validation valCustomer on save
+  {
+    create;
+    field CustomerId;
+  }
+  validation valBeginDate on save
+  {
+    create;
+    field BeginDate;
+  }
+  validation valEndDate on save
+  {
+    create;
+    field EndDate;
+  }
+  validation valDateSequence on save
+  {
+    create;
+    field BeginDate,
+    EndDate;
+  }
+
+  determination determineStatus on modify { create; }
+  determination determineDuration on save
+  {
+    field BeginDate,
+    EndDate;
+  }
+
+
+  determine action adjustDuration
+  {
+    validation valBeginDate;
+    validation valEndDate;
+    validation valDateSequence;
+    determination determineDuration;
+  }
+
+  side effects
+  {
+    determine action adjustDuration
+    executed on field BeginDate,
+    field EndDate
+    affects field Duration,
+        messages;
+  }
+
+
+  determine action checkCustomer
+  {
+    validation valCustomer;
+  }
+
+  mapping for z6803_travel corresponding
+    {
+      AgencyID     = agency_id;
+      TravelID     = travel_id;
+      CustomerID   = customer_id;
+      BeginDate    = begin_date;
+      EndDate      = end_date;
+      ChangedAt    = changed_at;
+      ChangedBy    = changed_by;
+      LocChangedAt = loc_changed_at;
+    }
+}
+
+
+define behavior for Z6803_R_TRAVELITEM alias Item
+persistent table z6803_travelitem
+authorization dependent by _Travel
+lock dependent by _Travel
+etag master LocChangedAt
+draft table z6803travelid
+{
+  update;
+  delete;
+
+  association _Travel { with draft; }
+  field ( readonly, numbering : managed )
+  ItemUuid;
+  field ( readonly )
+  AgencyId,
+  TravelId;
+
+  mapping for z6803_travelitem corresponding
+    {
+      ItemUuid           = item_uuid;
+      AgencyId           = agency_id;
+      TravelId           = travel_id;
+      CarrierId          = carrier_id;
+      ConnectionId       = connection_id;
+      FlightDate         = flight_date;
+      BookingId          = booking_id;
+      PassengerFirstName = passenger_first_name;
+      PassengerLastName  = passenger_last_name;
+      ChangedAt          = changed_at;
+      ChangedBy          = changed_by;
+      LocChangedAt       = loc_changed_at;
+    }
+}

@@ -1,0 +1,11 @@
+@EndUserText.label: 'Auth Travel'
+@MappingRole: true
+define role Z6803_C_TRAVEL {
+    grant
+        select
+            on
+                z6803_c_TRAVEL
+                    where
+                        inheriting conditions from entity z6803_R_TRAVEL;
+                        
+}
