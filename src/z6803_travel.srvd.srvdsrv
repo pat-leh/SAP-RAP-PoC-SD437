@@ -1,4 +1,5 @@
-@EndUserText.label: 'TRavel Service'
+@EndUserText.label: 'PLE Travel Service'
 define service Z6803_travel {
-  expose z6803_c_TRAVEL;
+  expose Z6803_C_TRAVEL;
+  expose Z6803_C_TRAVELITEM;
 }

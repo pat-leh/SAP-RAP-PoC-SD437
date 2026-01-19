@@ -4,7 +4,7 @@ strict ( 2 );
 use draft;
 use side effects;
 
-define behavior for z6803_c_TRAVEL //alias <alias_name>
+define behavior for Z6803_C_TRAVEL // alias travel
 use etag
 {
   use create;
@@ -23,8 +23,19 @@ use etag
 
   use action adjustDuration;
 
+  use association _TravelItem { create; with draft; }
+
   side effects
   {
     determine action checkCustomer executed on field CustomerId affects messages;
   }
+}
+
+
+define behavior for Z6803_C_TRAVELITEM
+use etag
+{
+    use update;
+    use delete;
+    use association _Travel { with draft; }
 }

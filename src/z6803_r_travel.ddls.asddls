@@ -1,8 +1,8 @@
-@AccessControl.authorizationCheck: #CHECK
+@AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Flight Travel (Data Model)'
-define root view entity z6803_R_TRAVEL
+define root view entity Z6803_R_TRAVEL
   as select from z6803_travel
-  composition  [0..*] of Z6803_R_TRAVELITEM as _Travelitem 
+  composition  [0..*] of Z6803_R_TRAVELITEM as _TravelItem 
 {
   key agency_id                                as AgencyId,
   key travel_id                                as TravelId,
@@ -18,6 +18,6 @@ define root view entity z6803_R_TRAVEL
       changed_by                               as ChangedBy,
       @Semantics.systemDateTime.localInstanceLastChangedAt: true
       loc_changed_at                           as LocChangedAt,
-      _Travelitem
+      _TravelItem
       
 }

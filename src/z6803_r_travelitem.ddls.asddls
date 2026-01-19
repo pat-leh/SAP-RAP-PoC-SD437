@@ -2,8 +2,8 @@
 @EndUserText.label: 'Flight Travel Item'
 define view entity Z6803_R_TRAVELITEM
   as select from z6803_travelitem
-  association to parent z6803_R_TRAVEL as _travel on  $projection.AgencyId = _travel.AgencyId
-                                                  and $projection.TravelId = _travel.TravelId
+  association to parent Z6803_R_TRAVEL as _Travel on  $projection.AgencyId = _Travel.AgencyId
+                                                  and $projection.TravelId = _Travel.TravelId
 {
   key item_uuid            as ItemUuid,
       agency_id            as AgencyId,
@@ -20,5 +20,5 @@ define view entity Z6803_R_TRAVELITEM
       changed_by           as ChangedBy,
       @Semantics.systemDateTime.localInstanceLastChangedAt: true
       loc_changed_at       as LocChangedAt,
-      _travel
+      _Travel
 }

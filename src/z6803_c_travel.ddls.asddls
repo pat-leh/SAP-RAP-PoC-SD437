@@ -1,11 +1,10 @@
-@AccessControl.authorizationCheck: #CHECK
+@AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Projection'
-@Metadata.ignorePropagatedAnnotations: true
 @Search.searchable: true
 @Metadata.allowExtensions: true
-define root view entity z6803_c_TRAVEL
+define root view entity Z6803_C_TRAVEL
   provider contract transactional_query
-  as projection on z6803_R_TRAVEL
+  as projection on Z6803_R_TRAVEL
 {
   key AgencyId,
   key TravelId,
@@ -21,5 +20,6 @@ define root view entity z6803_c_TRAVEL
       Status,
       ChangedAt,
       ChangedBy,
-      LocChangedAt
+      LocChangedAt,
+      _TravelItem: redirected to composition child Z6803_C_TRAVELITEM
 }

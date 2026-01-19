@@ -3,7 +3,7 @@ strict ( 2 );
 
 with draft;
 
-define behavior for z6803_R_TRAVEL alias travel
+define behavior for Z6803_R_TRAVEL alias Travel
 persistent table z6803_travel ##UNMAPPED_FIELD
 draft table z6803_travel_d
 lock master
@@ -27,8 +27,10 @@ early numbering
     validation valBeginDate;
     validation valEndDate;
     validation valDateSequence;
+    validation Item~valFlightDate;
   }
-  association _TravelItem { create; with draft; }
+  association _Travelitem { create; with draft; }
+
   field ( readonly )
   status,
   Duration,
@@ -126,10 +128,10 @@ early numbering
 
 define behavior for Z6803_R_TRAVELITEM alias Item
 persistent table z6803_travelitem
+draft table z6803travelid
 authorization dependent by _Travel
 lock dependent by _Travel
 etag master LocChangedAt
-draft table z6803travelid
 {
   update;
   delete;
@@ -137,9 +139,19 @@ draft table z6803travelid
   association _Travel { with draft; }
   field ( readonly, numbering : managed )
   ItemUuid;
+
   field ( readonly )
   AgencyId,
   TravelId;
+
+  validation valFlightDate on save
+  {
+    create;
+    field FlightDate;
+  }
+  determination determineTravelDates on save
+  { field FlightDate;
+  }
 
   mapping for z6803_travelitem corresponding
     {

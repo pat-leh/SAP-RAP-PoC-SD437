@@ -9,74 +9,85 @@
                }
      }
 
-annotate entity z6803_c_TRAVEL with
-{
-  @UI.facet: [ { id:            'Travel',
-                     purpose:       #STANDARD,
-                     type:          #IDENTIFICATION_REFERENCE,
-                     label:         'Travel',
-                     position:      10 }
-                ]
+annotate entity Z6803_C_TRAVEL with
+{    @UI.facet: [ { id:            'Travel',
+                    purpose:       #STANDARD,
+                    type:          #IDENTIFICATION_REFERENCE,
+                    label:         'Travel',
+                    position:      10 }
+                 ,
+                 { id:            'TravelItem',
+                    purpose:       #STANDARD,
+                    type:          #LINEITEM_REFERENCE,
+                    targetElement: '_TravelItem',
+                    label:         'Travel Items',
+                    position:      20 }
 
-  @UI: {
-         identification: [ { position: 10, importance: #LOW } ]
-       }
-  AgencyId;
+               ]
 
-  @UI: {
-         identification: [ { position: 20, importance: #HIGH } ],
-         selectionField: [ { position: 10  }]
-       }
-  TravelId;
+    @UI: {
+           identification: [ { position: 10, importance: #LOW } ]
+         }
+    AgencyId;
 
-  @UI: {
-         lineItem:       [ { position: 20, importance: #HIGH } ],
-         identification: [ { position: 30, importance: #HIGH } ]
-       }
+    @UI: {
+           identification: [ { position: 20, importance: #HIGH } ],
+           selectionField: [ { position: 10  }]
+         }
+    TravelId;
 
-  Description;
+    @UI: {
+           lineItem:       [ { position: 20, importance: #HIGH } ],
+           identification: [ { position: 30, importance: #HIGH } ]
+         }
 
-  @UI: {
-         lineItem:       [ { position: 30, importance: #MEDIUM } ],
-         identification: [ { position: 40, importance: #MEDIUM } ],
-         selectionField: [ { position: 20 }]
-       }
+    Description;
 
-  CustomerId;
+    @UI: {
+           lineItem:       [ { position: 30, importance: #MEDIUM } ],
+           identification: [ { position: 40, importance: #MEDIUM } ],
+           selectionField: [ { position: 20 }]
+         }
 
-  @UI: {
-         lineItem:       [ { position: 40, importance: #MEDIUM } ],
-         identification: [ { position: 50, importance: #MEDIUM } ]
-       }
+    CustomerId;
 
-  BeginDate;
+    @UI: {
+           lineItem:       [ { position: 40, importance: #MEDIUM } ],
+           identification: [ { position: 50, importance: #MEDIUM } ]
+         }
 
-  @UI: {
-         lineItem:       [ { position: 50, importance: #LOW } ],
-         identification: [ { position: 60, importance: #LOW } ]
-       }
-  EndDate;
+    BeginDate;
 
-  @UI: {
-       lineItem:       [ { position: 35, importance: #LOW } ],
-       identification: [ { position: 65, importance: #LOW } ]
-     }
-  Duration;
+    @UI: {
+           lineItem:       [ { position: 50, importance: #LOW } ],
+           identification: [ { position: 60, importance: #LOW } ]
+         }
+    EndDate;
 
-  @UI: {
-         lineItem:       [ { position: 10, importance: #HIGH },
-                           { type: #FOR_ACTION, dataAction: 'cancel_travel', label: 'Cancel the Travel' } ],
-         identification: [ { position: 70, importance: #HIGH } ]
-       }
-  Status;
+    @UI: {
+           lineItem:       [ { position: 35, importance: #LOW } ],
+           identification: [ { position: 65, importance: #LOW } ]
+         }
+    Duration;
 
-  @UI.hidden: true
-  ChangedAt;
+    @UI: {
+           lineItem:       [ { position: 10, importance: #HIGH },
+                                 { type:       #FOR_ACTION,
+                                   dataAction: 'cancel_travel',
+                                   label:      'Cancel the Travel'
+                                 }
+                           ],
+           identification: [ { position: 70, importance: #HIGH } ]
+         }
+    Status;
 
-  @UI.hidden: true
-  ChangedBy;
+    @UI.hidden: true
+    ChangedAt;
 
-  @UI.hidden: true
-  LocChangedAt;
+    @UI.hidden: true
+    ChangedBy;
+
+    @UI.hidden: true
+    LocChangedAt;
 
 }
