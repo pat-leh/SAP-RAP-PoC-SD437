@@ -11,6 +11,7 @@ total etag ChangedAt
 authorization master ( instance )
 etag master LocChangedAt //ChangedAt
 early numbering
+with additional save
 {
   create ( authorization : global );
   update ( features : instance );
@@ -51,6 +52,7 @@ early numbering
 
 
   action ( features : instance ) cancel_travel;
+  event TravelCreated;
 
 
   validation valDescription on save
@@ -127,7 +129,8 @@ early numbering
 
 
 define behavior for Z6803_R_TRAVELITEM alias Item
-persistent table z6803_travelitem
+//persistent table z6803_travelitem
+with unmanaged save
 draft table z6803travelid
 authorization dependent by _Travel
 lock dependent by _Travel
@@ -152,6 +155,22 @@ etag master LocChangedAt
   determination determineTravelDates on save
   { field FlightDate;
   }
+  mapping for /lrn/437_s_tritem  control /lrn/437_s_tritemx  corresponding
+
+    {
+      ItemUuid           = item_uuid;
+      AgencyId           = agency_id;
+      TravelId           = travel_id;
+      CarrierId          = carrier_id;
+      ConnectionId       = connection_id;
+      FlightDate         = flight_date;
+      BookingId          = booking_id;
+      PassengerFirstName = passenger_first_name;
+      PassengerLastName  = passenger_last_name;
+      ChangedAt          = changed_at;
+      ChangedBy          = changed_by;
+      LocChangedAt       = loc_changed_at;
+    }
 
   mapping for z6803_travelitem corresponding
     {
