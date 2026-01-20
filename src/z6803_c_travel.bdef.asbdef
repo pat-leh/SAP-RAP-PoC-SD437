@@ -4,6 +4,9 @@ strict ( 2 );
 use draft;
 use side effects;
 
+extensible;
+
+
 define behavior for Z6803_C_TRAVEL // alias travel
 use etag
 {
@@ -34,6 +37,7 @@ use etag
 
 define behavior for Z6803_C_TRAVELITEM
 use etag
+extensible
 {
     use update;
     use delete;

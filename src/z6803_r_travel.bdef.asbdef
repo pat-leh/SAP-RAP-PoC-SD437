@@ -3,6 +3,14 @@ strict ( 2 );
 
 with draft;
 
+extensible{
+ with additional save;
+ with validations on save;
+ with determinations on modify;
+ with determinations on save;
+
+}
+
 define behavior for Z6803_R_TRAVEL alias Travel
 persistent table z6803_travel ##UNMAPPED_FIELD
 draft table z6803_travel_d
@@ -12,6 +20,7 @@ authorization master ( instance )
 etag master LocChangedAt //ChangedAt
 early numbering
 with additional save
+extensible
 {
   create ( authorization : global );
   update ( features : instance );
@@ -21,7 +30,7 @@ with additional save
   draft action Activate optimized;
   draft action Discard;
   draft action Resume;
-  draft determine action Prepare
+  draft determine action Prepare extensible
   {
     validation valDescription;
     validation valCustomer;
@@ -52,7 +61,7 @@ with additional save
 
 
   action ( features : instance ) cancel_travel;
-  event TravelCreated;
+  event TravelCreated parameter z6803_a_event;
 
 
   validation valDescription on save
@@ -114,7 +123,7 @@ with additional save
     validation valCustomer;
   }
 
-  mapping for z6803_travel corresponding
+  mapping for z6803_travel corresponding  ##unextensible_mapping
     {
       AgencyID     = agency_id;
       TravelID     = travel_id;
@@ -135,6 +144,7 @@ draft table z6803travelid
 authorization dependent by _Travel
 lock dependent by _Travel
 etag master LocChangedAt
+extensible
 {
   update;
   delete;
@@ -155,7 +165,7 @@ etag master LocChangedAt
   determination determineTravelDates on save
   { field FlightDate;
   }
-  mapping for /lrn/437_s_tritem  control /lrn/437_s_tritemx  corresponding
+  mapping for /lrn/437_s_tritem  control /lrn/437_s_tritemx  corresponding  ##unextensible_mapping
 
     {
       ItemUuid           = item_uuid;
@@ -172,7 +182,7 @@ etag master LocChangedAt
       LocChangedAt       = loc_changed_at;
     }
 
-  mapping for z6803_travelitem corresponding
+  mapping for z6803_travelitem corresponding  ##unextensible_mapping
     {
       ItemUuid           = item_uuid;
       AgencyId           = agency_id;
